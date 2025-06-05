@@ -91,6 +91,10 @@ func (client *Client) Update(ctx context.Context, user User) (*auth.UserRecord, 
 		PhotoURL(user.PhotoURL).
 		Disabled(false)
 	u, err := client.UpdateUser(ctx, user.UID, params)
+	if err != nil {
+		return nil, err
+	}
+	err = client.SetCustomUserClaims(ctx, u.UID, user.CustomClaims)
 	return u, err
 }
 
