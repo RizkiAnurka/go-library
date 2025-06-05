@@ -1,4 +1,4 @@
-module github.com/edufund-tech/go-library
+module github.com/RizkiAnurka/go-library
 
 go 1.15
 
