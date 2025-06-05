@@ -1,7 +1,7 @@
 package nsqadapter
 
 import (
-	nsqdriver "github.com/edufund-tech/go-library/nsq-driver"
+	nsqdriver "github.com/RizkiAnurka/go-library/nsq-driver"
 	nsq "github.com/nsqio/go-nsq"
 )
 
