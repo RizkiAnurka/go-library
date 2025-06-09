@@ -64,38 +64,62 @@ func (client *Client) GetByPhone(ctx context.Context, phone string) (*auth.UserR
 }
 
 func (client *Client) Create(ctx context.Context, user User) (*auth.UserRecord, error) {
-	params := (&auth.UserToCreate{}).
-		Email(user.Email).
-		EmailVerified(user.EmailVerified).
-		PhoneNumber(user.PhoneNumber).
-		DisplayName(user.DisplayName).
-		Password(user.Password).
-		PhotoURL(user.PhotoURL).
-		Disabled(true)
+	params := (&auth.UserToCreate{})
+
+	if user.Email != "" {
+		params = params.Email(user.Email)
+	}
+	if user.PhoneNumber != "" {
+		params = params.PhoneNumber(user.PhoneNumber)
+	}
+	if user.DisplayName != "" {
+		params = params.DisplayName(user.DisplayName)
+	}
+	if user.PhotoURL != "" {
+		params = params.PhotoURL(user.PhotoURL)
+	}
+	if user.Password != "" {
+		params = params.Password(user.Password)
+	}
+
 	u, err := client.CreateUser(ctx, params)
 	if err != nil {
 		return nil, err
 	}
-	err = client.SetCustomUserClaims(ctx, u.UID, user.CustomClaims)
+	err = client.SetUserCustomClaims(ctx, u.UID, user.CustomClaims)
 
 	return u, err
 }
 
 func (client *Client) Update(ctx context.Context, user User) (*auth.UserRecord, error) {
-	params := (&auth.UserToUpdate{}).
-		Email(user.Email).
-		EmailVerified(user.EmailVerified).
-		PhoneNumber(user.PhoneNumber).
-		DisplayName(user.DisplayName).
-		Password(user.Password).
-		PhotoURL(user.PhotoURL).
-		Disabled(false)
+
+	params := (&auth.UserToUpdate{})
+	if user.Email != "" {
+		params = params.Email(user.Email)
+	}
+	if user.PhoneNumber != "" {
+		params = params.PhoneNumber(user.PhoneNumber)
+	}
+	if user.DisplayName != "" {
+		params = params.DisplayName(user.DisplayName)
+	}
+	if user.PhotoURL != "" {
+		params = params.PhotoURL(user.PhotoURL)
+	}
+	if user.Password != "" {
+		params = params.Password(user.Password)
+	}
+
 	u, err := client.UpdateUser(ctx, user.UID, params)
 	if err != nil {
 		return nil, err
 	}
-	err = client.SetCustomUserClaims(ctx, u.UID, user.CustomClaims)
+	err = client.SetUserCustomClaims(ctx, u.UID, user.CustomClaims)
 	return u, err
+}
+
+func (client *Client) SetUserCustomClaims(ctx context.Context, uid string, claims map[string]interface{}) error {
+	return client.SetCustomUserClaims(ctx, uid, claims)
 }
 
 func (client *Client) Delete(ctx context.Context, user User) error {

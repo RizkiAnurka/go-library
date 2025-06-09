@@ -35,7 +35,7 @@ type Account struct {
 	Email string `json:"email,omitempty"`
 }
 
-//LoginResponse legacy login response
+// LoginResponse legacy login response
 type LoginResponse struct {
 	Token   string            `json:"token,omitempty"`
 	Status  string            `json:"status,omitempty"`
@@ -47,7 +47,7 @@ type Token struct {
 	*auth.Token
 }
 
-//Wrapper wrapper response
+// Wrapper wrapper response
 type Wrapper struct {
 	Data    interface{} `json:"data,omitempty"`
 	Error   interface{} `json:"error,omitempty"`
@@ -117,9 +117,6 @@ func Verify(ctx context.Context, token string, permissions map[string]interface{
 	client = &http.Client{}
 
 	decryptURL := ctx.Value("URL_MIDDLEMAN_DECRYPT").(string)
-	if decryptURL == "" {
-		decryptURL = "https://api.edufund.co.id/api/general/decrypt-account"
-	}
 
 	req, err = http.NewRequest("POST", decryptURL, r)
 	if err != nil {

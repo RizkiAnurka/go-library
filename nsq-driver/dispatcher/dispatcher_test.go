@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	nsqdriver "github.com/edufund-tech/go-library/nsq-driver"
+	nsqdriver "github.com/RizkiAnurka/go-library/nsq-driver"
 	"github.com/stretchr/testify/assert"
 
 	nsq "github.com/nsqio/go-nsq"
